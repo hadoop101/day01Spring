@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+">
+    <!--切点(save,update,translate)+通知(start,commit,rollback,release)-->
+    <bean class="pack01.dao.impl.AccountDaoImpl" id="dao"/>
+    <bean class="pack01.service.impl.AccountServiceImpl" id="service">
+        <property name="accountDao" ref="dao"/>
+    </bean>
+    <bean class="pack01.tx.MyTxManager" id="txManager"/>
+    <aop:config>
+        <!--切点(save,update,translate)+通知(start,commit,rollback,release)-->
+        <aop:pointcut id="pt" expression="execution(* pack01.service.impl.*.*(..))"></aop:pointcut>
+        <aop:aspect ref="txManager">
+            <!--前置-->
+            <aop:before method="start" pointcut-ref="pt"/>
+            <!--后置-->
+            <aop:after-returning method="commit" pointcut-ref="pt"/>
+            <!--异常-->
+            <aop:after-throwing method="rollback" pointcut-ref="pt"/>
+            <!--最终-->
+            <aop:after method="release" pointcut-ref="pt"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
