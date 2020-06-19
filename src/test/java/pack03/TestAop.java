@@ -6,7 +6,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import pack01.bean.Account;
 import pack01.proxy01.AccountServiceProxy;
 import pack01.service.AccountService;
+import pack01.service.impl.AccountServiceImpl;
 import pack01.tx.MyTxManager;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.util.Arrays;
 
 public class TestAop {
     @Test
@@ -45,6 +51,53 @@ public class TestAop {
         AccountService accountService = new AccountServiceProxy();
         //2:新类里面  业务对象 与  事务管理对象
         accountService.translate(1001L,1002L,100D);
+        //3:调用新类的方法
+
+    }
+
+    @Test
+    public void test04(){//JDK动态的代理 Proxy
+        //增强对象
+        final MyTxManager myTxManager = new MyTxManager();
+        //目标对象
+        final AccountService accountService = new AccountServiceImpl();
+        //1:定义一个新类
+        ClassLoader cl =accountService.getClass().getClassLoader();
+        Class [] interfaces = accountService.getClass().getInterfaces();
+        InvocationHandler handler = new InvocationHandler() {
+            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                System.out.println("----------此处编写逻辑会影响代理类对象的所有方法");
+                //参1 proxy 代理对象 不要调用会出现死循环
+                //参2 method 代理对象的方法
+                //参3 args 代理对象的方法的参数
+                System.out.println(method);
+                System.out.println(Arrays.toString(args));
+                Object returnValue = null;
+                if(method.getName().startsWith("save")||method.getName().startsWith("update")||method.getName().startsWith("translate")){
+
+                    //save update translate 需要增加事务管理的调用代理try...catch.finally
+                    System.out.println("-------------需要加事务");
+                    try{
+                        myTxManager.start();
+                        returnValue= method.invoke(accountService,args);
+                        myTxManager.commit();
+                    }catch (Exception exception){
+                        myTxManager.rollback();
+                    }finally {
+                        myTxManager.release();
+                    }
+                }else{
+                    //默认执行
+                    returnValue= method.invoke(accountService,args);
+                }
+                return returnValue;
+            }
+        } ;
+        AccountService accountService2 = (AccountService) Proxy.newProxyInstance(cl,interfaces,handler);//产生代理类的对象
+        //2:新类里面  业务对象 与  事务管理对象
+        Account account = new Account(1001L,"jack",1000D);
+        accountService2.translate(1001L,1002L,100D);
+        // System.out.println(accountService2.toString());
         //3:调用新类的方法
 
     }
