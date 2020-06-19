@@ -83,12 +83,12 @@ public class TestAop {
                     //save update translate 需要增加事务管理的调用代理try...catch.finally
                     System.out.println("-------------需要加事务");
                     try{
-                        myTxManager.start();
+                        myTxManager.start();//前置
                         returnValue= method.invoke(accountService,args);
-                        myTxManager.commit();
+                        myTxManager.commit();//后置
                     }catch (Exception exception){
-                        myTxManager.rollback();
-                    }finally {
+                        myTxManager.rollback();//异常
+                    }finally {//最终
                         myTxManager.release();
                     }
                 }else{
