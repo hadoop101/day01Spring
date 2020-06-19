@@ -47,7 +47,7 @@ public class AccountServiceImpl implements AccountService {
 
         //更新
         accountDao.update(fromAccount);
-        System.out.println(1/0);
+        //System.out.println(1/0);
         accountDao.update(intoAccount);
     }
 }
