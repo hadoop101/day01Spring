@@ -20,7 +20,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public AccountServiceImpl() {
-        //accountDao = new AccountDaoImpl();
+        accountDao = new AccountDaoImpl();
     }
 
     public void saveAccount(Account account) {

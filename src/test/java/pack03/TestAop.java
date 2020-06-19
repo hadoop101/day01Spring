@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import pack01.bean.Account;
+import pack01.proxy01.AccountServiceProxy;
 import pack01.service.AccountService;
 import pack01.tx.MyTxManager;
 
@@ -34,6 +35,17 @@ public class TestAop {
         txManager.commit();
         txManager.rollback();
         txManager.release();
+
+    }
+
+    @Test
+    public void test03(){//装饰者模式
+
+        //1:定义一个新类
+        AccountService accountService = new AccountServiceProxy();
+        //2:新类里面  业务对象 与  事务管理对象
+        accountService.translate(1001L,1002L,100D);
+        //3:调用新类的方法
 
     }
 }
