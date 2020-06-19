@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import pack01.bean.Account;
 import pack01.service.AccountService;
+import pack01.tx.MyTxManager;
 
 public class TestAop {
     @Test
@@ -22,5 +23,17 @@ public class TestAop {
         accountService.translate(1001L,1002L,100D);
 
     }
+    @Test
+    public void test02(){
 
+        //1：定义一个事务管理类
+        MyTxManager txManager = new MyTxManager();
+
+        //2：编写 start  commit  rollback 释放连接
+        txManager.start();
+        txManager.commit();
+        txManager.rollback();
+        txManager.release();
+
+    }
 }
