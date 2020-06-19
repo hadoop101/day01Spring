@@ -26,11 +26,12 @@ public class TestSpringAop {
         //3:获取service对应的
         AccountService accountService = (AccountService) beanFactory.getBean("service");
 
-        Account account = new Account(1001L,"jack",1000D);
-        accountService.saveAccount(account);
-        accountService.updateAccount(account);
-        accountService.translate(1001L,1002L,100D);
-
+ //       Account account = new Account(1001L,"jack",1000D);
+//        accountService.saveAccount(account);
+//        accountService.updateAccount(account);
+//        accountService.translate(1001L,1002L,100D);
+        Account account=  accountService.findAccount(1001L);
+        System.out.println(account);
     }
 
 }
