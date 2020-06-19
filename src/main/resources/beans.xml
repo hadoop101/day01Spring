@@ -5,7 +5,7 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- 配置service-->
-    <bean class="pack01.service.impl.AccountServiceImpl" id="service"/>
+    <bean class="pack01.service.impl.AccountServiceImpl" id="service"  />
     <!-- 配置dao-->
     <bean class="pack01.dao.impl.AccountDaoImpl" id="dao"/>
 </beans>

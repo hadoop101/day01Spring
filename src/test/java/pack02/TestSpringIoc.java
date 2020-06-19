@@ -24,7 +24,9 @@ public class TestSpringIoc {
 
         //3:获取service对应的
         AccountService accountService = (AccountService) beanFactory.getBean("service");
-
+        AccountService accountService2 = (AccountService) beanFactory.getBean("service");
+        System.out.println(accountService);
+        System.out.println(accountService2);
         //4:调用方法
         accountService.saveAccount(null);
 
