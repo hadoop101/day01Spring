@@ -8,4 +8,51 @@
     <bean class="pack01.service.impl.AccountServiceImpl" id="service"  />
     <!-- 配置dao-->
     <bean class="pack01.dao.impl.AccountDaoImpl" id="dao"/>
+
+    <!-- di 注入 本质就是调用构造方法或者设置方法，给对象的成员变量赋值-->
+    <bean class="pack01.bean.Account" id="account1">
+        <constructor-arg name="id" value="1001"/>
+        <constructor-arg name="account" value="jack"/>
+        <constructor-arg name="money" value="1000"/>
+    </bean>
+    <!-- name对应的成员变量的set方法注意 id  - setId -->
+    <bean class="pack01.bean.Account" id="account2">
+        <property name="id" value="1002"/>
+        <property name="account" value="rose"/>
+        <property name="money" value="1000"/>
+        <property name="array" >
+            <array>
+                <value>hadoop101</value>
+                <value>hadoop102</value>
+                <value>hadoop103</value>
+            </array>
+        </property>
+        <property name="list" >
+            <list>
+                <value>hadoop101</value>
+                <value>hadoop102</value>
+                <value>hadoop103</value>
+            </list>
+        </property>
+        <property name="set" >
+            <set>
+                <value>hadoop101</value>
+                <value>hadoop102</value>
+                <value>hadoop103</value>
+                <value>hadoop103</value>
+            </set>
+        </property>
+        <property name="map" >
+            <map>
+                <entry value="1001" key="k1"/>
+                <entry value="1002" key="k2"/>
+            </map>
+        </property>
+        <property name="properties" >
+            <props>
+                <prop key="1001">1000</prop>
+                <prop key="1002">2000</prop>
+            </props>
+        </property>
+    </bean>
 </beans>

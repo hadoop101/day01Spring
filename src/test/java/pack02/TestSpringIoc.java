@@ -31,5 +31,22 @@ public class TestSpringIoc {
         accountService.saveAccount(null);
 
     }
+    @Test
+    public void test02Di(){
+        System.out.println("test01");
 
+        //1:使用maven依赖了spring基本包
+
+        //2:初始化spring ioc容器
+
+        ApplicationContext beanFactory = new ClassPathXmlApplicationContext("beans.xml");
+
+        //3:获取account1对应的
+        Account account1 = (Account) beanFactory.getBean("account1");
+        Account account2 = (Account) beanFactory.getBean("account2");
+        //4:调用方法
+        System.out.println(account2);
+
+
+    }
 }
