@@ -60,4 +60,20 @@ public class TestJdbcTemplate {
         Account account = dao.find(1003L);
         System.out.println(account);
     }
+
+    @Test
+    public void test03(){
+        //1:获取连接  从spring提供的数据源中获取
+
+        //2:使用jdbcTemplate
+        ApplicationContext applicationContext=  new ClassPathXmlApplicationContext("beans_jt.xml");
+
+        //3:
+        AccountService service = (AccountService) applicationContext.getBean("service");
+        Account account = service.findAccount(1001L);
+        System.out.println(account);
+        //service.saveAccount(new Account(1004L,"tony11",100D));
+
+        service.translate(1001L,1002L,100);
+    }
 }

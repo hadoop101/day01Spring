@@ -19,4 +19,7 @@
     <bean class="pack01.dao.impl.AccountDaoJtImpl" id="dao">
             <property name="jdbcTemplate" ref="jt"/>
     </bean>
+    <bean class="pack01.service.impl.AccountServiceImpl" id="service">
+            <property name="accountDao" ref="dao"/>
+    </bean>
 </beans>
