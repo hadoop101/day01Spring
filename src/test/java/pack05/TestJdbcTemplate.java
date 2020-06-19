@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import pack01.bean.Account;
+import pack01.dao.AccountDao;
 import pack01.service.AccountService;
 
 import java.sql.ResultSet;
@@ -45,4 +46,18 @@ public class TestJdbcTemplate {
         System.out.println(accountList);
     }
 
+    @Test
+    public void test02(){
+        //1:获取连接  从spring提供的数据源中获取
+
+        //2:使用jdbcTemplate
+        ApplicationContext applicationContext=  new ClassPathXmlApplicationContext("beans_jt.xml");
+
+        //3:
+        AccountDao dao = (AccountDao) applicationContext.getBean("dao");
+        //dao.save(new Account(1003L,"tony",1000D));
+        //dao.update(new Account(1003L,"tony",100D));
+        Account account = dao.find(1003L);
+        System.out.println(account);
+    }
 }
