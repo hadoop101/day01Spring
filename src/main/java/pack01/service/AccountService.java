@@ -8,4 +8,7 @@ public interface AccountService {
     void updateAccount(Account account);
 
     Account findAccount(long l);
+
+    //转账方法
+    void translate(long from, long into, double value);
 }

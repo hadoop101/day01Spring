@@ -2,6 +2,7 @@ package pack01.dao.impl;
 
 import pack01.bean.Account;
 import pack01.dao.AccountDao;
+import pack01.db.Db;
 
 public class AccountDaoImpl implements AccountDao {
     public void save(Account account) {
@@ -14,6 +15,6 @@ public class AccountDaoImpl implements AccountDao {
 
     public Account find(long id) {
         System.out.println("select...find");
-        return null;
+        return Db.get(id);
     }
 }
