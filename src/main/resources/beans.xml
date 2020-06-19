@@ -4,10 +4,16 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- 配置service-->
-    <bean class="pack01.service.impl.AccountServiceImpl" id="service"  />
+
     <!-- 配置dao-->
     <bean class="pack01.dao.impl.AccountDaoImpl" id="dao"/>
+
+    <!-- 配置service-->
+    <bean class="pack01.service.impl.AccountServiceImpl" id="service"  >
+        <property name="accountDao" ref="dao"/>
+    </bean>
+    <!-- 配置date-->
+    <bean class="java.util.Date" id="date"/>
 
     <!-- di 注入 本质就是调用构造方法或者设置方法，给对象的成员变量赋值-->
     <bean class="pack01.bean.Account" id="account1">
@@ -54,5 +60,7 @@
                 <prop key="1002">2000</prop>
             </props>
         </property>
+        <!--给成员变量赋值上容器管理的对象-->
+        <property name="birthday" ref="date"/>
     </bean>
 </beans>

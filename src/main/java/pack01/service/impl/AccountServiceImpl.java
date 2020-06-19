@@ -9,9 +9,18 @@ public class AccountServiceImpl implements AccountService {
 
     private AccountDao accountDao  = null;
 
+    //添加设置方法
+
+    public AccountDao getAccountDao() {
+        return accountDao;
+    }
+
+    public void setAccountDao(AccountDao accountDao) {
+        this.accountDao = accountDao;
+    }
 
     public AccountServiceImpl() {
-        accountDao = new AccountDaoImpl();
+        //accountDao = new AccountDaoImpl();
     }
 
     public void saveAccount(Account account) {
