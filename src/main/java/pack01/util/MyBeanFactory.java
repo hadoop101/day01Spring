@@ -37,7 +37,7 @@ public class MyBeanFactory {
             Object obj = container.get(id);
 
             if( obj != null){
-                return obj;
+                return obj;//重用同一个对象
             }else{
                 //容器里面没有对象
                 String className = properties.getProperty(id);
@@ -55,7 +55,7 @@ public class MyBeanFactory {
 
             }
         }else{
-            //多实例
+            //多实例prototype
             //容器里面没有对象
             String className = properties.getProperty(id);
             Class czl = null;
